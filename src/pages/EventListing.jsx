@@ -1,32 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Typography,
   List,
   ListItem,
   ListItemText,
   Divider,
+  Box,
+  Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import Layout from "../Layout/Layout";
+import mockEvents from "../mock/mockEvents.";
+import AddEvent from "../components/Form/AddEvent";
 
 const EventListing = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <Layout>
-      <Typography variant="h4" gutterBottom>
-        Events Listing
-      </Typography>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h4" gutterBottom>
+          Events Listing
+        </Typography>
+        <Button variant="contained" color="error" onClick={handleOpen}>
+          Add Event
+          <AddEvent open={open} handleClose={handleClose} />
+        </Button>
+      </Box>
       <List>
-        <ListItem button component={Link} to="/events/1">
-          <ListItemText primary="Event 1" secondary="Event 1 Details" />
-        </ListItem>
-        <Divider />
-        <ListItem button component={Link} to="/events/2">
-          <ListItemText primary="Event 2" secondary="Event 2 Details" />
-        </ListItem>
-        <Divider />
-        <ListItem button component={Link} to="/events/3">
-          <ListItemText primary="Event 3" secondary="Event 3 Details" />
-        </ListItem>
+        {mockEvents.map((event) => (
+          <div key={event.id}>
+            <ListItem button component={Link} to={`${event.id}`}>
+              <ListItemText
+                primary={`${event.title}`}
+                secondary={`${event.details}`}
+              />
+            </ListItem>
+            <Divider />
+          </div>
+        ))}
       </List>
     </Layout>
   );
