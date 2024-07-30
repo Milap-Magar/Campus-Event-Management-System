@@ -1,16 +1,22 @@
+import React from "react";
 import {
   Dialog,
-  DialogActions,
-  DialogContent,
   DialogTitle,
+  DialogContent,
+  DialogActions,
   TextField,
   Button,
 } from "@mui/material";
-import React from "react";
 
-const AddEvent = ({ open, handleClose }) => {
+const AddEvent = ({
+  open,
+  handleClose,
+  handleChange,
+  handleAddEvent,
+  newEvent,
+}) => {
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onClose={handleClose}>
       <DialogTitle>Add New Event</DialogTitle>
       <DialogContent>
         <TextField
@@ -20,6 +26,8 @@ const AddEvent = ({ open, handleClose }) => {
           type="text"
           fullWidth
           variant="standard"
+          value={newEvent.title}
+          onChange={handleChange}
         />
         <TextField
           margin="dense"
@@ -28,13 +36,17 @@ const AddEvent = ({ open, handleClose }) => {
           type="text"
           fullWidth
           variant="standard"
+          value={newEvent.details}
+          onChange={handleChange}
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button color="primary">Add</Button>
+        <Button onClick={handleAddEvent} color="primary">
+          Add
+        </Button>
       </DialogActions>
     </Dialog>
   );
